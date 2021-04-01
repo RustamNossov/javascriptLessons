@@ -35,82 +35,153 @@ let personalMovieDB = {
             movies: {},
             actors: {},
             genres: [],
-            privat: false
+            privat: true,
+            start: function() {
+                let numberOfMovies;
+                while (numberOfMovies === '' || isNaN(numberOfMovies) || !numberOfMovies || numberOfMovies === null) {
+                    numberOfMovies = +prompt('How many movies have you seen?', '');
+                    if (numberOfMovies === '' || isNaN(numberOfMovies) || !numberOfMovies || numberOfMovies === null) {
+                        alert('You should fill the field with number');
+                    }
+                }
+
+                personalMovieDB['count'] = numberOfMovies;
+            },
+            detectPersonalLevel: function() {
+                let lastMovie, score;
+                while (!lastMovie ||  lastMovie === '' || lastMovie.length > 50 || lastMovie === null){
+
+                    lastMovie = prompt('One of the last movies you have seen?', '');
+
+                    if (!lastMovie ||  lastMovie === '' || lastMovie === null) { 
+                        alert('You should fill the field with name of the movie'); 
+                        lastMovie = '';
+                    }
+
+
+                    if (lastMovie.length > 50) { 
+                        alert('Length of name of the movie should be shorter than 50 symbols'); 
+                    } 
+                    //console.log(lastMovie);
+
+                }
+
+                while (!score || isNaN(score) || score==='' || score === null) {
+
+                    score = +prompt('How do you score it?', '');
+
+                    if (isNaN(score)) { alert('Enter a number');}
+
+                    if (!score || score==='' || score === null) {
+                        alert('You should fill the field with the rate');
+                    }
+                }
+
+                personalMovieDB.movies[lastMovie] = score;
+            },
+            showMyDB: function() {
+                if (!personalMovieDB.privat) {
+                    console.log(personalMovieDB);
+                }
+            },
+            writeYourGenres: function() {
+                let genre;
+                for (let i=1; i<4; ++i) {
+                    genre = prompt(`Your favorite genre number ${i}`, '');
+                    if (genre &&  genre != '' && genre.length < 50 && genre != null) {
+                        personalMovieDB.genres.push(genre);
+                    }else{
+                        i=i-1;
+                    }
+                }
+                let x=1;
+                personalMovieDB.genres.forEach(element => {
+                    console.log(`Favorite genre ${x} - is ${element}`);
+                    ++x;
+                });
+            },
+            toggleVisibleMyDB: function() {
+                personalMovieDB.privat = personalMovieDB.privat === true ? false : true; 
+            }
 };
 
-function start() {
-    let numberOfMovies;
-        while (numberOfMovies === '' || isNaN(numberOfMovies) || !numberOfMovies || numberOfMovies === null) {
-            numberOfMovies = +prompt('How many movies have you seen?', '');
-            if (numberOfMovies === '' || isNaN(numberOfMovies) || !numberOfMovies || numberOfMovies === null) {
-                alert('You should fill the field with number');
-            }
-        }
+// function start() {
+//     let numberOfMovies;
+//         while (numberOfMovies === '' || isNaN(numberOfMovies) || !numberOfMovies || numberOfMovies === null) {
+//             numberOfMovies = +prompt('How many movies have you seen?', '');
+//             if (numberOfMovies === '' || isNaN(numberOfMovies) || !numberOfMovies || numberOfMovies === null) {
+//                 alert('You should fill the field with number');
+//             }
+//         }
 
-        personalMovieDB['count'] = numberOfMovies;
-}
+//         personalMovieDB['count'] = numberOfMovies;
+// }
 
-function detectPersonalLevel() {
-    let lastMovie, score;
-        while (!lastMovie ||  lastMovie === '' || lastMovie.length > 50 || lastMovie === null){
+// function detectPersonalLevel() {
+//     let lastMovie, score;
+//         while (!lastMovie ||  lastMovie === '' || lastMovie.length > 50 || lastMovie === null){
 
-            lastMovie = prompt('One of the last movies you have seen?', '');
+//             lastMovie = prompt('One of the last movies you have seen?', '');
 
-            if (!lastMovie ||  lastMovie === '' || lastMovie === null) { 
-                alert('You should fill the field with name of the movie'); 
-                lastMovie = '';
-            }
+//             if (!lastMovie ||  lastMovie === '' || lastMovie === null) { 
+//                 alert('You should fill the field with name of the movie'); 
+//                 lastMovie = '';
+//             }
 
 
-            if (lastMovie.length > 50) { 
-                alert('Length of name of the movie should be shorter than 50 symbols'); 
-            } 
-            //console.log(lastMovie);
+//             if (lastMovie.length > 50) { 
+//                 alert('Length of name of the movie should be shorter than 50 symbols'); 
+//             } 
+//             //console.log(lastMovie);
 
-        }
+//         }
 
-        while (!score || isNaN(score) || score==='' || score === null) {
+//         while (!score || isNaN(score) || score==='' || score === null) {
 
-            score = +prompt('How do you score it?', '');
+//             score = +prompt('How do you score it?', '');
 
-            if (isNaN(score)) { alert('Enter a number');}
+//             if (isNaN(score)) { alert('Enter a number');}
 
-            if (!score || score==='' || score === null) {
-                alert('You should fill the field with the rate');
-            }
-        }
+//             if (!score || score==='' || score === null) {
+//                 alert('You should fill the field with the rate');
+//             }
+//         }
 
-        personalMovieDB.movies[lastMovie] = score;
+//         personalMovieDB.movies[lastMovie] = score;
 
-}
+// }
 
 for (let i = 0; i<=2; ++i) {
     if (i===0) {
-        start();
+        personalMovieDB.start();
     } else {
-        detectPersonalLevel();
+        personalMovieDB.detectPersonalLevel();
     }
 }
 
-function showMyDB() {
-    if (!personalMovieDB.privat) {
-        console.log(personalMovieDB);
-    }
-}
+// function showMyDB() {
+//     if (!personalMovieDB.privat) {
+//         console.log(personalMovieDB);
+//     }
+// }
 
-showMyDB();
 
-function writeYourGenres() {
-    let genre;
-    for (let i=1; i<4; ++i) {
-        genre = prompt('Your favorite genre number'+i, '');
-        if (genre &&  genre != '' && genre.length < 50 && genre != null) {
-            personalMovieDB.genres.push(genre);
-        }else{
-            i=i-1;
-        }
-    }
-}
+// function writeYourGenres() {
+//     let genre;
+//     for (let i=1; i<4; ++i) {
+//         genre = prompt(`Your favorite genre number ${i}`, '');
+//         if (genre &&  genre != '' && genre.length < 50 && genre != null) {
+//             personalMovieDB.genres.push(genre);
+//         }else{
+//             i=i-1;
+//         }
+//     }
+// }
 
-writeYourGenres();
+personalMovieDB.writeYourGenres();
+
+personalMovieDB.toggleVisibleMyDB();
+
+personalMovieDB.showMyDB();
+
 
