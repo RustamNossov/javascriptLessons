@@ -28,7 +28,7 @@
 
 
 const questionList = ['How many movies have you seen?', 'One of the last movies you have seen?', 'How you score it?'];
-console.log(questionList[0]);
+//console.log(questionList[0]);
 
 let personalMovieDB = {
             count: 0,
@@ -38,10 +38,8 @@ let personalMovieDB = {
             privat: false
 };
 
-
-for (let i = 0; i<=2; ++i) {
-    if (i===0) {
-        let numberOfMovies;
+function start() {
+    let numberOfMovies;
         while (numberOfMovies === '' || isNaN(numberOfMovies) || !numberOfMovies || numberOfMovies === null) {
             numberOfMovies = +prompt('How many movies have you seen?', '');
             if (numberOfMovies === '' || isNaN(numberOfMovies) || !numberOfMovies || numberOfMovies === null) {
@@ -50,8 +48,10 @@ for (let i = 0; i<=2; ++i) {
         }
 
         personalMovieDB['count'] = numberOfMovies;
-    } else {
-        let lastMovie, score;
+}
+
+function detectPersonalLevel() {
+    let lastMovie, score;
         while (!lastMovie ||  lastMovie === '' || lastMovie.length > 50 || lastMovie === null){
 
             lastMovie = prompt('One of the last movies you have seen?', '');
@@ -65,13 +65,13 @@ for (let i = 0; i<=2; ++i) {
             if (lastMovie.length > 50) { 
                 alert('Length of name of the movie should be shorter than 50 symbols'); 
             } 
-            console.log(lastMovie);
+            //console.log(lastMovie);
 
         }
 
         while (!score || isNaN(score) || score==='' || score === null) {
 
-            score = prompt('How do you score it?', '');
+            score = +prompt('How do you score it?', '');
 
             if (isNaN(score)) { alert('Enter a number');}
 
@@ -81,7 +81,36 @@ for (let i = 0; i<=2; ++i) {
         }
 
         personalMovieDB.movies[lastMovie] = score;
+
+}
+
+for (let i = 0; i<=2; ++i) {
+    if (i===0) {
+        start();
+    } else {
+        detectPersonalLevel();
     }
 }
 
-console.log(personalMovieDB);
+function showMyDB() {
+    if (!personalMovieDB.privat) {
+        console.log(personalMovieDB);
+    }
+}
+
+showMyDB();
+
+function writeYourGenres() {
+    let genre;
+    for (let i=1; i<4; ++i) {
+        genre = prompt('Your favorite genre number'+i, '');
+        if (genre &&  genre != '' && genre.length < 50 && genre != null) {
+            personalMovieDB.genres.push(genre);
+        }else{
+            i=i-1;
+        }
+    }
+}
+
+writeYourGenres();
+
